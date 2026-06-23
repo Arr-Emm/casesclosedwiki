@@ -1,0 +1,304 @@
+ <!DOCTYPE html>
+ <html lang="en-US" dir="ltr">
+    <head>
+        <meta charset="utf-8" name="viewport">
+        <title>The Miyano/Akai Family Tree</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+        <style>
+            .family-tree {
+                font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                padding: 40px 20px;
+            }
+
+            .family-tree h2 {
+                text-align: center;
+                margin-bottom: 40px;
+                font-weight: 600;
+            }
+
+            .family-tree .tree-wrapper {
+                display: flex;
+                justify-content: center;
+            }
+
+            /* ===========================
+            PERSON BOXES
+            =========================== */
+            .family-tree .person-box {
+                background: #ffffff;
+                border-radius: 14px;
+                padding: 14px 22px;
+                min-width: 160px;
+                text-align: center;
+                box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+                display: inline-block;
+            }
+
+            .family-tree .grandparent { border-top: 5px solid #ffb74d; font-weight: 600; }
+            .family-tree .parent      { border-top: 5px solid #64b5f6; }
+            .family-tree .spouse      { border-top: 5px solid #ba68c8; }
+            .family-tree .cousin      { border-top: 5px solid #81c784; font-weight: 600; }
+
+            /* Couples */
+            .family-tree .couple {
+                display: flex;
+                gap: 12px;
+                justify-content: center;
+            }
+
+            /* ===========================
+            CONNECTORS
+            =========================== */
+            .family-tree .vertical-line {
+                width: 2px;
+                height: 30px;
+                background: #c0c0c0;
+                margin: 0 auto;
+            }
+
+            /* ===========================
+            PARENT SIBLING BRACKET
+            =========================== */
+            .family-tree .siblings-wrapper {
+                position: relative;
+                margin-top: 30px;
+                padding-top: 40px;
+            }
+
+            .family-tree .grandparent-connector {
+                position: absolute;
+                top: 0;
+                left: 50%;
+                width: 2px;
+                height: 30px;
+                background: #c0c0c0;
+                transform: translateX(-50%);
+            }
+
+            .family-tree .siblings-bracket {
+                position: absolute;
+                top: 30px;
+                left: 50%;
+                width: 70%;
+                height: 30px;
+                transform: translateX(-50%);
+            }
+
+            .family-tree .siblings-bracket::before,
+            .family-tree .siblings-bracket::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                width: 2px;
+                height: 30px;
+                background: #c0c0c0;
+            }
+
+            .family-tree .siblings-bracket::before { left: 0; }
+            .family-tree .siblings-bracket::after  { right: 0; }
+
+            .family-tree .siblings-bracket span {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 2px;
+                background: #c0c0c0;
+            }
+
+            /* ===========================
+            GRANDKID BRACKET (FIXED)
+            =========================== */
+            .family-tree .bracket-wrapper {
+                position: relative;
+                margin-top: 0;              /* no gap from vertical line */
+                padding-bottom: 50px;       /* space AFTER bracket */
+            }
+
+            .family-tree .bracket {
+                position: relative;         /* stays at top, touching line */
+                width: 100%;
+                height: 30px;
+            }
+
+            .family-tree .bracket::before,
+            .family-tree .bracket::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                width: 2px;
+                height: 30px;
+                background: #c0c0c0;
+            }
+
+            .family-tree .bracket::before { left: 0; }
+            .family-tree .bracket::after  { right: 0; }
+
+            .family-tree .bracket span {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 2px;
+                background: #c0c0c0;
+            }
+
+            /* ===========================
+            LAYOUT
+            =========================== */
+            .family-tree .level {
+                display: flex;
+                justify-content: center;
+                gap: 80px;
+                margin-top: 40px;
+            }
+
+            .family-tree .children {
+                display: flex;
+                gap: 16px;
+                justify-content: center;
+                margin-top: 40px;  /* THIS controls bracket → kids spacing */
+            }
+
+            /* ===========================
+            RESPONSIVE
+            =========================== */
+            @media (max-width: 768px) {
+                .family-tree .level,
+                .family-tree .children {
+                    flex-direction: column;
+                    gap: 40px;
+                }
+
+                .family-tree .siblings-bracket,
+                .family-tree .bracket {
+                    width: 2px;
+                    height: 80px;
+                }
+
+                .family-tree .siblings-bracket::before,
+                .family-tree .siblings-bracket::after,
+                .family-tree .bracket::before,
+                .family-tree .bracket::after {
+                    display: none;
+                }
+
+                .family-tree .siblings-bracket span,
+                .family-tree .bracket span {
+                    width: 2px;
+                    height: 80px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+       <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-dark bg-primary navbar-custom" data-bs-theme="dark">
+        <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">Case Closed Wiki</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="characters.html">Characters</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="blackorganization.html">The Black Organization</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                The Police Detectives
+                </a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">The Tokyo Police</a></li>
+                <li><a class="dropdown-item" href="#">The Osaka Police</a></li>
+                <li><a class="dropdown-item" href="#">The Gunma Police</a></li>
+                <li><a class="dropdown-item" href="#">The Nagano Police</a></li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Family Trees
+                </a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="kudokuroba.html">The Kudo/Kuroba Family</a></li>
+                <li><a class="dropdown-item" href="moorenakamori.html">The Moore/Nakamori Family</a></li>
+                <li><a class="dropdown-item" href="miyanoakai.html">The Miyano/Akai Family</a></li>
+                </ul>
+            </li>
+            </ul>
+        </div>
+        </div>
+	    </nav>
+
+        <section class="family-tree">
+        <h2>The Miyano/Akai Family Tree</h2>
+
+        <div class="tree-wrapper">
+        <div>
+
+        <!-- Grandparents -->
+        <div class="couple">
+            <div class="person-box grandparent">Unnamed Person</div>
+            <div class="person-box grandparent">Unnamed Person</div>
+        </div>
+
+        <!-- Parent siblings -->
+        <div class="siblings-wrapper">
+            <div class="grandparent-connector"></div>
+            <div class="siblings-bracket"><span></span></div>
+
+            <div class="level">
+
+                <!-- Sibling with 2 kids -->
+                <div style="text-align:center;">
+                    <div class="couple">
+                        <div class="person-box parent">Elena Miyano (Dead)</div>
+                        <div class="person-box spouse">Atsushi Miyano (Dead)</div>
+                    </div>
+
+                    <div class="vertical-line"></div>
+
+                    <div class="bracket-wrapper">
+                        <div class="bracket"><span></span></div>
+                        <div class="children">
+                            <div class="person-box cousin">Shiho Miyano (Anita Hailey)</div>
+                            <div class="person-box cousin">Akemi Miyano (Dead)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sibling with 3 kids -->
+                <div style="text-align:center;">
+                    <div class="couple">
+                        <div class="person-box spouse">Tsutomu Akai (Death Unconfirmed)</div>
+                        <div class="person-box parent">Mary Sera</div>
+                    </div>
+
+                    <div class="vertical-line"></div>
+
+                    <div class="bracket-wrapper">
+                        <div class="bracket"><span></span></div>
+                        <div class="children">
+                            <div class="person-box cousin">Masumi Sera</div>
+                            <div class="person-box cousin">Shukichi Haneda</div>
+                            <div class="person-box cousin">Shuichi Akai</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        </div>
+        </div>
+        </section>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    </body>
+</html>

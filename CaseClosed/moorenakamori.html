@@ -1,0 +1,226 @@
+ <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Moore/Nakamori Family</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <style>
+        .family-tree {
+            font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            padding: 40px 20px;
+        }
+
+        .family-tree h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+
+        .family-tree .tree-wrapper {
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Person cards */
+        .family-tree .person-box {
+            background: #ffffff;
+            border-radius: 14px;
+            padding: 14px 22px;
+            min-width: 160px;
+            text-align: center;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            display: inline-block; /* prevent flex stretching */
+        }
+
+        .family-tree .grandparent { border-top: 5px solid #ffb74d; font-weight: 600; }
+        .family-tree .parent      { border-top: 5px solid #64b5f6; }
+        .family-tree .spouse      { border-top: 5px solid #ba68c8; }
+        .family-tree .cousin      { border-top: 5px solid #81c784; font-weight: 600; }
+
+        /* Couples */
+        .family-tree .couple {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        /* Vertical connectors */
+        .family-tree .vertical-line {
+            width: 2px;
+            height: 30px;
+            background: #c0c0c0;
+            margin: 0 auto;
+        }
+
+        /* Sibling bracket */
+        .family-tree .siblings-wrapper {
+            position: relative;
+            margin-top: 30px;
+            padding-top: 40px;
+        }
+
+        .family-tree .grandparent-connector {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 2px;
+            height: 30px;
+            background: #c0c0c0;
+            transform: translateX(-50%);
+        }
+
+        .family-tree .siblings-bracket {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            width: 70%;
+            height: 30px;
+            transform: translateX(-50%);
+        }
+
+        .family-tree .siblings-bracket::before,
+        .family-tree .siblings-bracket::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 2px;
+            height: 30px;
+            background: #c0c0c0;
+        }
+
+        .family-tree .siblings-bracket::before { left: 0; }
+        .family-tree .siblings-bracket::after  { right: 0; }
+
+        .family-tree .siblings-bracket span {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #c0c0c0;
+        }
+
+        /* Level layout */
+        .family-tree .level {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 40px;
+            flex-wrap: nowrap;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .family-tree .level {
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .family-tree .siblings-bracket {
+                width: 2px;
+                height: 80px;
+            }
+
+            .family-tree .siblings-bracket::before,
+            .family-tree .siblings-bracket::after {
+                display: none;
+            }
+
+            .family-tree .siblings-bracket span {
+                width: 2px;
+                height: 80px;
+            }
+        }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-dark bg-primary navbar-custom" data-bs-theme="dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">Case Closed Wiki</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="characters.html">Characters</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="blackorganization.html">The Black Organization</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                The Police Detectives
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">The Tokyo Police</a></li>
+                <li><a class="dropdown-item" href="#">The Osaka Police</a></li>
+                <li><a class="dropdown-item" href="#">The Gunma Police</a></li>
+                <li><a class="dropdown-item" href="#">The Nagano Police</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Family Trees
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="kudokuroba.html">The Kudo/Kuroba Family</a></li>
+                <li><a class="dropdown-item" href="moorenakamori.html">The Moore/Nakamori Family</a></li>
+                <li><a class="dropdown-item" href="miyanoakai.html">The Miyano/Akai Family</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+	  </nav>
+
+    <section class="family-tree">
+    <h2>The Moore/Nakamori Family Tree</h2>
+
+    <div class="tree-wrapper">
+        <div>
+            <!-- Grandparents -->
+            <div class="couple">
+                <div class="person-box grandparent">Unnamed Person</div>
+                <div class="person-box grandparent">Unnamed Person</div>
+            </div>
+
+            <!-- Sibling group -->
+            <div class="siblings-wrapper">
+                <div class="grandparent-connector"></div>
+                <div class="siblings-bracket"><span></span></div>
+
+                <div class="level">
+                    <!-- First sibling + child -->
+                    <div style="text-align:center;">
+                        <div class="couple">
+                            <div class="person-box parent">Eva Kaden</div>
+                            <div class="person-box spouse">Richard Moore</div>
+                        </div>
+                        <div class="vertical-line"></div>
+                        <div class="person-box cousin">Rachel Moore</div>
+                    </div>
+
+                    <!-- Second sibling + child -->
+                    <div style="text-align:center;">
+                        <div class="couple">
+                            <div class="person-box spouse">Ginzo Nakamori</div>
+                            <div class="person-box parent">Midoriko Nakamori</div>
+                        </div>
+                        <div class="vertical-line"></div>
+                        <div class="person-box cousin">Aoko Nakamori</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  </body>
+</html>
